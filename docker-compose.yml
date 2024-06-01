@@ -1,0 +1,26 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  web-service:
+    build: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3050:3050"
+    command: ["npx", "nodemon", "app.js", "-L"]
+
+  mysql:
+    image: mysql:8.0.35
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: moneywise
+      MYSQL_USER: user_moneywise
+      MYSQL_PASSWORD: 12345
+
+volumes:
+  mysql-data:
