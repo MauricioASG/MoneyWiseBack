@@ -6,9 +6,7 @@ const UsuariosController = require('./controllers/UsuariosController');
 const app = express();
 const puerto = 3050;
 
-// Habilitar CORS
 app.use(cors());
-
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -17,7 +15,10 @@ app.get('/', (req, res) => {
 
 // Rutas para usuarios
 app.get('/usuarios', UsuariosController.indexGet);
+app.post('/auth/register', UsuariosController.register);
+app.post('/auth/login', UsuariosController.login);
 
-app.listen(puerto, () => {
+app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);
 });
+
