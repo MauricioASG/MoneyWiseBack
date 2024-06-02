@@ -38,6 +38,7 @@ CREATE TABLE MetaFinanciera (
   monto DECIMAL(10, 2) NOT NULL,
   periodo ENUM('Diario', 'Semanal') NOT NULL,
   ahorro_programado DECIMAL(10, 2) NOT NULL,
+  timePeriod INT NOT NULL,
   FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 

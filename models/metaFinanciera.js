@@ -2,32 +2,29 @@
 const db = require('../dbconnection');
 
 class MetaFinancieraModel {
-    static async getGoalByUserId(usuario_id) {
-        try {
-            const goal = await db('MetaFinanciera').where({ usuario_id }).select('*');
-            return goal;
-        } catch (error) {
-            throw new Error(`Error retrieving financial goal: ${error.message}`);
-        }
+  static async consultarPorUsuarioId(usuario_id) {
+    try {
+      return await db('MetaFinanciera').where({ usuario_id });
+    } catch (error) {
+      throw new Error(`Error al consultar meta financiera: ${error.message}`);
     }
+  }
 
-    static async createGoal(goal) {
-        try {
-            const result = await db('MetaFinanciera').insert(goal);
-            return result;
-        } catch (error) {
-            throw new Error(`Error creating financial goal: ${error.message}`);
-        }
+  static async crear(meta) {
+    try {
+      return await db('MetaFinanciera').insert(meta);
+    } catch (error) {
+      throw new Error(`Error al crear meta financiera: ${error.message}`);
     }
+  }
 
-    static async updateGoal(usuario_id, goal) {
-        try {
-            const result = await db('MetaFinanciera').where({ usuario_id }).update(goal);
-            return result;
-        } catch (error) {
-            throw new Error(`Error updating financial goal: ${error.message}`);
-        }
+  static async actualizar(id, meta) {
+    try {
+      return await db('MetaFinanciera').where({ id }).update(meta);
+    } catch (error) {
+      throw new Error(`Error al actualizar meta financiera: ${error.message}`);
     }
+  }
 }
 
 module.exports = MetaFinancieraModel;

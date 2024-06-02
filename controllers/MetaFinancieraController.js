@@ -2,34 +2,35 @@
 const MetaFinancieraModel = require('../models/metafinanciera');
 
 class MetaFinancieraController {
-    static async getGoal(req, res) {
-        try {
-            const { usuario_id } = req.params;
-            const goal = await MetaFinancieraModel.getGoalByUserId(usuario_id);
-            res.status(200).json(goal);
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ errno: 500, error: 'Error retrieving financial goal' });
-        }
+  static async getGoal(req, res) {
+    try {
+      const { usuario_id } = req.params;
+      const data = await MetaFinancieraModel.consultarPorUsuarioId(usuario_id);
+      res.send(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ errno: 500, error: 'Error retrieving goal' });
     }
+  }
 
-    static async createOrUpdateGoal(req, res) {
-        try {
-            const { usuario_id, monto, periodo, ahorro_programado } = req.body;
-            const existingGoal = await MetaFinancieraModel.getGoalByUserId(usuario_id);
+  static async createOrUpdateGoal(req, res) {
+    try {
+      const { id, usuario_id, monto, periodo, ahorro_programado, timePeriod } = req.body;
+      const goalData = { usuario_id, monto, periodo, ahorro_programado, timePeriod };
+      let result;
 
-            if (existingGoal.length > 0) {
-                await MetaFinancieraModel.updateGoal(usuario_id, { monto, periodo, ahorro_programado });
-            } else {
-                await MetaFinancieraModel.createGoal({ usuario_id, monto, periodo, ahorro_programado });
-            }
+      if (id) {
+        result = await MetaFinancieraModel.actualizar(id, goalData);
+      } else {
+        result = await MetaFinancieraModel.crear(goalData);
+      }
 
-            res.status(200).json({ message: 'Financial goal saved successfully' });
-        } catch (error) {
-            console.error(error);
-            res.status(500).send({ errno: 500, error: 'Error saving financial goal' });
-        }
+      res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ errno: 500, error: 'Error creating or updating goal' });
     }
+  }
 }
 
 module.exports = MetaFinancieraController;
