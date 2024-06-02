@@ -1,39 +1,30 @@
 const db = require('../dbconnection');
 
 class MetaFinancieraModel {
-    static async crear(meta) {
-        try {
-            const result = await db('MetaFinanciera').insert(meta);
-            return result;
-        } catch (error) {
-            throw new Error(`Error al crear meta financiera: ${error.message}`);
-        }
+  static async consultarPorUsuarioId(usuario_id) {
+    try {
+      const metas = await db.select('*').from('MetaFinanciera').where('usuario_id', usuario_id);
+      return metas;
+    } catch (error) {
+      throw new Error(`Error al consultar metas financieras: ${error.message}`);
     }
+  }
 
-    static async consultarPorUsuario(usuario_id) {
-        try {
-            const metas = await db('MetaFinanciera').where({ usuario_id }).select('*');
-            return metas;
-        } catch (error) {
-            throw new Error(`Error al consultar meta financiera: ${error.message}`);
-        }
+  static async crear(usuario_id, monto, periodo, ahorro_programado) {
+    try {
+      await db('MetaFinanciera').insert({ usuario_id, monto, periodo, ahorro_programado });
+    } catch (error) {
+      throw new Error(`Error al crear meta financiera: ${error.message}`);
     }
+  }
 
-    static async actualizar(id, meta) {
-        try {
-            await db('MetaFinanciera').where({ id }).update(meta);
-        } catch (error) {
-            throw new Error(`Error al actualizar meta financiera: ${error.message}`);
-        }
+  static async actualizar(id, monto, periodo, ahorro_programado) {
+    try {
+      await db('MetaFinanciera').where('id', id).update({ monto, periodo, ahorro_programado });
+    } catch (error) {
+      throw new Error(`Error al actualizar meta financiera: ${error.message}`);
     }
-
-    static async eliminar(id) {
-        try {
-            await db('MetaFinanciera').where({ id }).del();
-        } catch (error) {
-            throw new Error(`Error al eliminar meta financiera: ${error.message}`);
-        }
-    }
+  }
 }
 
 module.exports = MetaFinancieraModel;
