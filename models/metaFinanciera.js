@@ -1,4 +1,4 @@
-// models/metafinanciera.js
+// metaFinanciera.js
 const db = require('../dbconnection');
 
 class MetaFinancieraModel {

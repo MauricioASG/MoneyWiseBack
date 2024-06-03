@@ -1,3 +1,4 @@
+//MetaFinancieraController.js
 const MetaFinancieraModel = require('../models/metafinanciera');
 
 class MetaFinancieraController {
@@ -21,13 +22,7 @@ class MetaFinancieraController {
       if (id) {
         result = await MetaFinancieraModel.actualizar(id, goalData);
       } else {
-        // Primero verificamos si ya existe una meta para el usuario
-        const existingGoal = await MetaFinancieraModel.consultarPorUsuarioId(usuario_id);
-        if (existingGoal.length > 0) {
-          result = await MetaFinancieraModel.actualizar(existingGoal[0].id, goalData);
-        } else {
-          result = await MetaFinancieraModel.crear(goalData);
-        }
+        result = await MetaFinancieraModel.crear(goalData);
       }
 
       res.status(200).json(result);
