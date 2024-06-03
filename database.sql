@@ -39,6 +39,7 @@ CREATE TABLE MetaFinanciera (
   periodo ENUM('Diario', 'Semanal') NOT NULL,
   ahorro_programado DECIMAL(10, 2) NOT NULL,
   timePeriod INT NOT NULL,
+  ahorro_actual DECIMAL(10, 2) DEFAULT 0, -- Nueva columna para almacenar el ahorro actual
   FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 

@@ -47,4 +47,3 @@ class UsuariosController {
 }
 
 module.exports = UsuariosController;
-

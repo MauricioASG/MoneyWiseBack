@@ -15,8 +15,8 @@ class MetaFinancieraController {
 
   static async createOrUpdateGoal(req, res) {
     try {
-      const { id, usuario_id, monto, periodo, ahorro_programado, timePeriod } = req.body;
-      const goalData = { usuario_id, monto, periodo, ahorro_programado, timePeriod };
+      const { id, usuario_id, monto, periodo, ahorro_programado, timePeriod, ahorro_actual } = req.body;
+      const goalData = { usuario_id, monto, periodo, ahorro_programado, timePeriod, ahorro_actual };
       let result;
 
       if (id) {
