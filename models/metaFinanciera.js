@@ -28,7 +28,17 @@ class MetaFinancieraModel {
             throw new Error(`Error al actualizar meta financiera: ${error.message}`);
         }
     }
+
+    static async actualizarAhorroActual(id, ahorro_actual) {
+        try {
+            const result = await db('MetaFinanciera').where({ id }).update({ ahorro_actual });
+            return result;
+        } catch (error) {
+            throw new Error(`Error al actualizar ahorro actual: ${error.message}`);
+        }
+    }
 }
 
 module.exports = MetaFinancieraModel;
+
 

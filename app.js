@@ -1,8 +1,10 @@
+// app.js
 const express = require('express');
 const cors = require('cors');
 
 const UsuariosController = require('./controllers/UsuariosController');
 const MetaFinancieraController = require('./controllers/MetaFinancieraController');
+const TransaccionesController = require('./controllers/TransaccionesController');
 
 const app = express();
 const puerto = 3050;
@@ -22,6 +24,10 @@ app.post('/auth/login', UsuariosController.login);
 // Rutas para metas financieras
 app.get('/metaFinanciera/:usuario_id', MetaFinancieraController.getGoal);
 app.post('/metaFinanciera', MetaFinancieraController.createOrUpdateGoal);
+
+// Rutas para transacciones
+app.get('/transacciones/:usuario_id/fecha/:fecha', TransaccionesController.getTransactionsByDate);
+app.post('/transacciones', TransaccionesController.addTransaction); // Nueva ruta para agregar transacciones
 
 app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);

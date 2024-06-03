@@ -31,6 +31,17 @@ class MetaFinancieraController {
       res.status(500).send({ errno: 500, error: 'Error creating or updating goal' });
     }
   }
+
+  static async updateSavings(req, res) {
+    try {
+      const { id, ahorro_actual } = req.body;
+      const result = await MetaFinancieraModel.actualizarAhorroActual(id, ahorro_actual);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send({ errno: 500, error: 'Error updating savings' });
+    }
+  }
 }
 
 module.exports = MetaFinancieraController;
