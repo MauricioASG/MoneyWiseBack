@@ -1,3 +1,5 @@
+# Mauricio Alejandro Serrano García
+# N.C: 20460545
 # API para proyecto final
 El presente repositorio muestra el back-end para el proyecto de especialidad MoneyWise
 
@@ -20,13 +22,13 @@ Debes asegúrate de tener instalado y configurado Docker antes de comenzar.
 1. Clonar el repositorio en la máquina local:
    
    ```sh
-   git clone //github.com/MauricioASG/coin-sage.git
+   git clone //github.com/MauricioASG/MoneyWiseBack.git
    ```
 
 2. Navegar al directorio del proyecto:
    
    ```sh
-   cd coin-sage
+   cd MoneyWiseServer
    ```
 
 3. Ejecutar el siguiente comando para iniciar los contenedores:
