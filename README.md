@@ -47,7 +47,3 @@ Debes asegúrate de tener instalado y configurado Docker antes de comenzar.
 
 Es importante ejecutar el codigo de la base de datos "database.sql" en un manejador de bases de datos, en mi caso yo utilice HeidieSQL, solo copiamos el codigo del archivo y lo ejecutamos para que pueda funcionar y gardar datos.
 
-## Documentación detallada
-
-Para obtener información detallada sobre los endpoints y cómo utilizar la API,
-consulta la [documentación detallada](./docs/README.md).
