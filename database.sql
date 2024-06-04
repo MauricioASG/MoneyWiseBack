@@ -26,7 +26,7 @@ CREATE TABLE Transacciones (
   usuario_id INT,
   categoria_id INT,
   monto DECIMAL(10, 2) NOT NULL,
-  tipo ENUM('Ingreso', 'Gasto') NOT NULL,
+  tipo ENUM('Ingreso', 'Gasto', 'Prioritario', 'Recreativo', 'Hormiga', 'Servicios') NOT NULL,
   fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
   FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
