@@ -1,4 +1,3 @@
-//MetaFinancieraController.js
 const MetaFinancieraModel = require('../models/metafinanciera');
 
 class MetaFinancieraController {
@@ -45,3 +44,4 @@ class MetaFinancieraController {
 }
 
 module.exports = MetaFinancieraController;
+

@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const cors = require('cors');
 
@@ -24,6 +23,7 @@ app.post('/auth/login', UsuariosController.login);
 // Rutas para metas financieras
 app.get('/metaFinanciera/:usuario_id', MetaFinancieraController.getGoal);
 app.post('/metaFinanciera', MetaFinancieraController.createOrUpdateGoal);
+app.post('/metaFinanciera/updateSavings', MetaFinancieraController.updateSavings); // Asegúrate de que esta ruta esté definida
 
 // Rutas para transacciones
 app.get('/transacciones/:usuario_id/fecha/:fecha', TransaccionesController.getTransactionsByDate);
@@ -32,3 +32,4 @@ app.post('/transacciones', TransaccionesController.addTransaction); // Nueva rut
 app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);
 });
+

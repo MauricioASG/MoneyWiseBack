@@ -1,4 +1,3 @@
-// metaFinanciera.js
 const db = require('../dbconnection');
 
 class MetaFinancieraModel {
@@ -40,5 +39,3 @@ class MetaFinancieraModel {
 }
 
 module.exports = MetaFinancieraModel;
-
-
