@@ -28,6 +28,8 @@ app.post('/metaFinanciera/updateSavings', MetaFinancieraController.updateSavings
 // Rutas para transacciones
 app.get('/transacciones/:usuario_id/fecha/:fecha', TransaccionesController.getTransactionsByDate);
 app.post('/transacciones', TransaccionesController.addTransaction); // Nueva ruta para agregar transacciones
+app.put('/transacciones/:id', TransaccionesController.updateTransaction);
+app.delete('/transacciones/:id', TransaccionesController.deleteTransaction);
 
 app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);
