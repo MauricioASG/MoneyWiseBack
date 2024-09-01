@@ -14,6 +14,24 @@ class TransaccionesModel {
     }
   }
 
+  // Nueva función para obtener transacciones de un mes específico
+  static async obtenerPorMes(usuario_id, year, month) {
+    try {
+      const transacciones = await db('Transacciones')
+        .where({ usuario_id })
+        .andWhereRaw('YEAR(fecha) = ?', [year])
+        .andWhereRaw('MONTH(fecha) = ?', [month])
+        .select('id', 'categoria_id', 'monto', 'tipo', 'fecha');
+
+      // Log para verificar los datos obtenidos
+      console.log('Transacciones SQL:', transacciones);
+
+      return transacciones;
+    } catch (error) {
+      throw new Error(`Error al obtener transacciones por mes: ${error.message}`);
+    }
+  }
+
   static async agregar(transaccion) {
     try {
       const result = await db('Transacciones').insert(transaccion);

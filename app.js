@@ -31,6 +31,11 @@ app.post('/transacciones', TransaccionesController.addTransaction); // Nueva rut
 app.put('/transacciones/:id', TransaccionesController.updateTransaction);
 app.delete('/transacciones/:id', TransaccionesController.deleteTransaction);
 
+
+// server.js
+app.get('/transacciones/:usuario_id/mes/:year/:month', TransaccionesController.getTransactionsByMonth);
+
+
 app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);
 });
