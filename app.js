@@ -8,7 +8,14 @@ const TransaccionesController = require('./controllers/TransaccionesController')
 const app = express();
 const puerto = 3050;
 
-app.use(cors());
+// app.use(cors());
+
+//Aqui debemos tener la dirección ip de nuestra computadora local
+app.use(cors({
+  origin: 'http://192.168.137.1', // IP de tu servidor local
+  credentials: true,
+}));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
