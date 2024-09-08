@@ -45,6 +45,19 @@ CREATE TABLE Transacciones (
   FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 );
 
+CREATE TABLE IF NOT EXISTS MetaFinanciera (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT NOT NULL,
+  monto DECIMAL(10, 2) DEFAULT 0,  -- Meta financiera objetivo
+  ahorro_programado DECIMAL(10, 2) DEFAULT 0,  -- Ahorro programado por periodo
+  ahorro_actual DECIMAL(10, 2) DEFAULT 0,  -- Ahorro acumulado actual
+  periodo VARCHAR(50) DEFAULT 'Diario',  -- Periodo del ahorro (Diario, Semanal, etc.)
+  timePeriod INT DEFAULT 0,  -- Cantidad de días/semanas para cumplir la meta
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
+
+
 -- Inserciones en la tabla Categorias
 INSERT INTO Categorias (id, nombre, descripcion) 
 VALUES (0, 'Selecciona una categoría', 'Auxiliar para selección de categoría'),
