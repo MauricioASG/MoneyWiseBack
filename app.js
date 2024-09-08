@@ -12,9 +12,12 @@ const puerto = 3050;
 
 //Aqui debemos tener la dirección ip de nuestra computadora local
 app.use(cors({
-  origin: 'http://192.168.137.1', // IP de tu servidor local
+  // origin: 'http://192.168.137.1', // IP de tu servidor local COLILAP
+  origin: 'http://192.168.100.22', // IP de tu servidor local ASUS
   credentials: true,
 }));
+
+
 
 app.use(express.json());
 

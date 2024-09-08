@@ -46,18 +46,19 @@ class TransaccionesController {
     }
     
 
-  static async updateTransaction(req, res) {
-    try {
-      const { id } = req.params;
-      const { monto, tipo, categoria, fecha } = req.body;
-      const transactionData = { monto, tipo, categoria_id: categoria, fecha };
-      const result = await TransaccionesModel.actualizar(id, transactionData);
-      res.status(200).json(result);
-    } catch (error) {
-      console.error(error);
-      res.status(500).send({ errno: 500, error: 'Error updating transaction' });
+    static async updateTransaction(req, res) {
+      try {
+        const { id } = req.params;
+        const { monto, tipo, categoria_id, fecha } = req.body; // Asegúrate de recibir categoria_id correctamente
+        const transactionData = { monto, tipo, categoria_id, fecha };
+        const result = await TransaccionesModel.actualizar(id, transactionData);
+        res.status(200).json(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ errno: 500, error: 'Error updating transaction' });
+      }
     }
-  }
+    
 
   static async deleteTransaction(req, res) {
     try {

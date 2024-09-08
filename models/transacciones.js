@@ -43,16 +43,16 @@ class TransaccionesModel {
 
   static async actualizar(id, transaccion) {
     try {
-      // Aseguramos que la fecha esté en el formato correcto
       const formattedDate = new Date(transaccion.fecha).toISOString().slice(0, 19).replace('T', ' ');
       transaccion.fecha = formattedDate;
-
+  
       const result = await db('Transacciones').where({ id }).update(transaccion);
       return result;
     } catch (error) {
       throw new Error(`Error al actualizar transacción: ${error.message}`);
     }
   }
+  
 
   static async eliminar(id) {
     try {
