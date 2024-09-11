@@ -12,8 +12,8 @@ const puerto = 3050;
 
 //Aqui debemos tener la dirección ip de nuestra computadora local
 app.use(cors({
-  // origin: 'http://192.168.137.1', // IP de tu servidor local COLILAP
-  origin: 'http://192.168.100.22', // IP de tu servidor local ASUS
+  origin: 'http://192.168.137.1', // IP de tu servidor local COLILAP
+  // origin: 'http://192.168.100.22', // IP de tu servidor local ASUS
   credentials: true,
 }));
 
@@ -33,7 +33,8 @@ app.post('/auth/login', UsuariosController.login);
 // Rutas para metas financieras
 app.get('/metaFinanciera/:usuario_id', MetaFinancieraController.getGoal);
 app.post('/metaFinanciera', MetaFinancieraController.createOrUpdateGoal);
-app.post('/metaFinanciera/updateSavings', MetaFinancieraController.updateSavings); // Asegúrate de que esta ruta esté definida
+app.post('/metaFinanciera/updateSavings', MetaFinancieraController.updateSavings);
+
 
 // Rutas para transacciones
 app.get('/transacciones/:usuario_id/fecha/:fecha', TransaccionesController.getTransactionsByDate);

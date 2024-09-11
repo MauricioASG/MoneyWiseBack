@@ -45,6 +45,7 @@ CREATE TABLE Transacciones (
   FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 );
 
+
 CREATE TABLE IF NOT EXISTS MetaFinanciera (
   id INT AUTO_INCREMENT PRIMARY KEY,
   usuario_id INT NOT NULL,
@@ -76,3 +77,6 @@ VALUES (0, 'Selecciona una categoría', 'Auxiliar para selección de categoría'
 
 INSERT INTO Usuario (nombre, email, passw, salario)
 VALUES ('Mauricio Serrano', 'mau.com', '123', 40000.00);
+
+ALTER TABLE MetaFinanciera
+ADD COLUMN fecha_limite DATE;  -- Fecha límite para completar la meta de ahorro.
