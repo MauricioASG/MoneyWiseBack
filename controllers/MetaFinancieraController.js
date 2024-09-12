@@ -14,7 +14,7 @@ class MetaFinancieraController {
       res.status(500).send({ errno: 500, error: 'Error retrieving goal' });
     }
   }
-  
+
 
   // Crear o actualizar una meta financiera
   static async createOrUpdateGoal(req, res) {
@@ -37,13 +37,19 @@ class MetaFinancieraController {
   }
 
   // Actualizar el ahorro actual
+  // MetaFinancieraController.js
   static async updateSavings(req, res) {
     try {
       const { id, ahorro_actual } = req.body;
+
+      if (!id) {
+        return res.status(400).json({ error: 'Falta el id de la meta financiera' });
+      }
+
       const result = await MetaFinancieraModel.actualizarAhorroActual(id, ahorro_actual);
       res.status(200).json(result);
     } catch (error) {
-      console.error(error);
+      console.error('Error al actualizar el ahorro actual:', error);
       res.status(500).send({ errno: 500, error: 'Error updating savings' });
     }
   }

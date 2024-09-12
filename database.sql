@@ -80,3 +80,13 @@ VALUES ('Mauricio Serrano', 'mau.com', '123', 40000.00);
 
 ALTER TABLE MetaFinanciera
 ADD COLUMN fecha_limite DATE;  -- Fecha límite para completar la meta de ahorro.
+ALTER TABLE MetaFinanciera MODIFY timePeriod DATE;
+
+
+SELECT id, timePeriod FROM MetaFinanciera WHERE timePeriod NOT REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
+-- para eliminar datos invalidos
+DELETE FROM MetaFinanciera WHERE timePeriod NOT REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
+
+ALTER TABLE MetaFinanciera MODIFY timePeriod DATE;
+
+SELECT * FROM MetaFinanciera
