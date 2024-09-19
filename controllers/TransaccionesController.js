@@ -17,13 +17,10 @@ class TransaccionesController {
     static async getTransactionsByMonth(req, res) {
       try {
         const { usuario_id, year, month } = req.params;
-        
-        // Verifica que los parámetros se reciban correctamente
         console.log(`Usuario ID: ${usuario_id}, Año: ${year}, Mes: ${month}`);
   
         const transactions = await TransaccionesModel.obtenerPorMes(usuario_id, year, month);
-        
-        // Agrega un log para ver qué datos se están obteniendo
+  
         console.log('Transacciones obtenidas:', transactions);
   
         res.send(transactions);

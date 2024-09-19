@@ -23,7 +23,6 @@ class TransaccionesModel {
         .andWhereRaw('MONTH(fecha) = ?', [month])
         .select('id', 'categoria_id', 'monto', 'tipo', 'fecha');
 
-      // Log para verificar los datos obtenidos
       console.log('Transacciones SQL:', transacciones);
 
       return transacciones;
