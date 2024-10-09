@@ -28,6 +28,25 @@ class UsuariosModel {
             throw new Error(`Error al consultar usuario por email: ${error.message}`);
         }
     }
+
+    static async actualizar(id, data) {
+        try {
+            const result = await db('Usuario').where({ id }).update(data);
+            return result;
+        } catch (error) {
+            throw new Error(`Error al actualizar usuario: ${error.message}`);
+        }
+    }
+
+    static async consultarPorId(id) {
+        try {
+            const usuario = await db('Usuario').where({ id }).first();
+            return usuario;
+        } catch (error) {
+            throw new Error(`Error al consultar usuario por ID: ${error.message}`);
+        }
+    }
+    
 }
 
 module.exports = UsuariosModel;

@@ -1,4 +1,5 @@
-// /controlles/UsuariosControlle.js
+
+// /controllers/UsuariosController.js
 const UsuariosModel = require('../models/usuarios');
 
 class UsuariosController {
@@ -44,6 +45,35 @@ class UsuariosController {
             res.status(500).send({ errno: 500, error: 'Internal Server Error' });
         }
     }
+
+    // Mueve esta función dentro de la clase
+    static async updateUser(req, res) {
+        try {
+            const { nombre, email, salario } = req.body;
+            const { id } = req.params;
+
+            await UsuariosModel.actualizar(id, { nombre, email, salario });
+            res.status(200).send({ message: 'Datos actualizados con éxito' });
+        } catch (error) {
+            console.error('Error al actualizar el usuario:', error);
+            res.status(500).send({ errno: 500, error: 'Error al actualizar el usuario' });
+        }
+    }
+
+    static async getUser(req, res) {
+        try {
+            const { id } = req.params;
+            const user = await UsuariosModel.consultarPorId(id); // Función que obtiene el usuario por ID
+            if (!user) {
+                return res.status(404).json({ message: 'Usuario no encontrado' });
+            }
+            res.status(200).json(user);
+        } catch (error) {
+            console.error('Error al obtener el usuario:', error);
+            res.status(500).send({ error: 'Error al obtener el usuario' });
+        }
+    }
+    
 }
 
 module.exports = UsuariosController;

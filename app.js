@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
 
 // Rutas para usuarios
 app.get('/usuarios', UsuariosController.indexGet);
+// Ruta para obtener los detalles del usuario
+app.get('/usuarios/:id', UsuariosController.getUser);
 app.post('/auth/register', UsuariosController.register);
 app.post('/auth/login', UsuariosController.login);
 
@@ -41,7 +43,7 @@ app.get('/transacciones/:usuario_id/fecha/:fecha', TransaccionesController.getTr
 app.post('/transacciones', TransaccionesController.addTransaction); // Nueva ruta para agregar transacciones
 app.put('/transacciones/:id', TransaccionesController.updateTransaction);
 app.delete('/transacciones/:id', TransaccionesController.deleteTransaction);
-
+app.get('/transacciones/:usuario_id/categoria/:categoria_id/mes/:year/:month', TransaccionesController.getTransactionsByCategory);
 
 // server.js
 app.get('/transacciones/:usuario_id/mes/:year/:month', TransaccionesController.getTransactionsByMonth);
