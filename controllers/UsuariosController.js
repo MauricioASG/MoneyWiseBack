@@ -73,7 +73,20 @@ class UsuariosController {
             res.status(500).send({ error: 'Error al obtener el usuario' });
         }
     }
+
+    static async updateUser(req, res) {
+        try {
+          const { nombre, email, salario } = req.body;
+          const { id } = req.params;
     
-}
+          await UsuariosModel.actualizar(id, { nombre, email, salario });
+          res.status(200).send({ message: 'Datos actualizados con éxito' });
+        } catch (error) {
+          console.error('Error al actualizar el usuario:', error);
+          res.status(500).send({ errno: 500, error: 'Error al actualizar el usuario' });
+        }
+      }
+    }
+
 
 module.exports = UsuariosController;

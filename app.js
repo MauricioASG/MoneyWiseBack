@@ -31,6 +31,8 @@ app.get('/usuarios', UsuariosController.indexGet);
 app.get('/usuarios/:id', UsuariosController.getUser);
 app.post('/auth/register', UsuariosController.register);
 app.post('/auth/login', UsuariosController.login);
+app.put('/usuarios/:id', UsuariosController.updateUser);
+
 
 // Rutas para metas financieras
 app.get('/metaFinanciera/:usuario_id', MetaFinancieraController.getGoal);

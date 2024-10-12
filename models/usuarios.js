@@ -46,6 +46,17 @@ class UsuariosModel {
             throw new Error(`Error al consultar usuario por ID: ${error.message}`);
         }
     }
+
+    static async actualizar(id, data) {
+        try {
+            const result = await db('Usuario')
+                .where({ id })
+                .update(data); // Actualiza los campos con los nuevos datos proporcionados
+            return result;
+        } catch (error) {
+            throw new Error(`Error al actualizar usuario: ${error.message}`);
+        }
+    }
     
 }
 
