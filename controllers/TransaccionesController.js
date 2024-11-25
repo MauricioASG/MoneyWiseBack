@@ -4,6 +4,9 @@ const TransaccionesModel = require('../models/transacciones');
 const getTransactionsByDate = async (req, res) => {
   try {
     const { usuario_id, fecha } = req.params;
+    if (!fecha) {
+      return res.status(400).send({ error: 'Fecha no proporcionada' });
+    }
     const transactions = await TransaccionesModel.obtenerPorFecha(usuario_id, fecha);
     res.send(transactions);
   } catch (error) {
@@ -11,6 +14,7 @@ const getTransactionsByDate = async (req, res) => {
     res.status(500).send({ errno: 500, error: 'Error retrieving transactions by date' });
   }
 };
+
 
 const getTransactionsByMonth = async (req, res) => {
   try {

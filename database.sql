@@ -58,6 +58,16 @@ CREATE TABLE IF NOT EXISTS MetaFinanciera (
   FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 
+CREATE TABLE Reminders (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    description TEXT,
+    date TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+);
 
 -- Inserciones en la tabla Categorias
 INSERT INTO Categorias (id, nombre, descripcion) 

@@ -4,6 +4,7 @@ const cors = require('cors');
 const UsuariosController = require('./controllers/UsuariosController');
 const MetaFinancieraController = require('./controllers/MetaFinancieraController');
 const TransaccionesController = require('./controllers/TransaccionesController');
+const RemindersController = require('./controllers/RemindersController');
 
 const app = express();
 const puerto = 3050;
@@ -55,3 +56,8 @@ app.listen(puerto, '0.0.0.0', () => {
   console.log(`Servidor corriendo en http://localhost:${puerto}`);
 });
 
+// Rutas para recordatorios
+app.post('/reminders', RemindersController.addReminder);
+app.get('/reminders/:usuario_id', RemindersController.getReminders);
+app.put('/reminders/:id', RemindersController.updateReminder);
+app.delete('/reminders/:id', RemindersController.deleteReminder);
