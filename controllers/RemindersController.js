@@ -1,78 +1,98 @@
 const db = require('../dbconnection');
 
-class RemindersController {
-    static async addReminder(req, res) {
-        try {
-            const { usuario_id, title, description, date } = req.body;
+// Crear un nuevo recordatorio
+const addReminder = async (req, res) => {
+  try {
+    const { usuario_id, title, description, date } = req.body;
 
-            // Validar los datos enviados
-            if (!usuario_id || !title || !description || !date) {
-                return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-            }
-
-            // Formatear la fecha para MySQL
-            const formattedDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
-
-            // Insertar el recordatorio en la base de datos
-            const [newReminderId] = await db('Reminders').insert({
-                usuario_id,
-                title,
-                description,
-                date,
-            });
-
-            res.status(201).json({ id: newReminderId });
-        } catch (error) {
-            console.error('Error al crear el recordatorio:', error);
-            res.status(500).json({ error: 'Error al crear el recordatorio' });
-        }
+    if (!usuario_id || !title || !description || !date) {
+      return res.status(400).send({ error: 'Todos los campos son requeridos.' });
     }
 
-    static async getReminders(req, res) {
-        try {
-            const { usuario_id } = req.params;
+    const formattedDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
 
-            const reminders = await db('Reminders')
-                .where({ usuario_id })
-                .select('*');
+    const [id] = await db('Reminders').insert({
+      usuario_id,
+      title,
+      description,
+      date: formattedDate,
+    });
 
-            res.status(200).json(reminders);
-        } catch (error) {
-            console.error('Error al obtener los recordatorios:', error);
-            res.status(500).json({ error: 'Error al obtener los recordatorios' });
-        }
+    res.status(201).json({ id });
+  } catch (error) {
+    console.error('Error al crear el recordatorio:', error);
+    res.status(500).send({ error: 'Error al crear el recordatorio.' });
+  }
+};
+
+// Obtener recordatorios por usuario
+const getReminders = async (req, res) => {
+  try {
+    const { usuario_id } = req.params;
+
+    if (!usuario_id) {
+      return res.status(400).send({ error: 'El usuario_id es requerido.' });
     }
 
-    static async updateReminder(req, res) {
-        try {
-            const { id } = req.params;
-            const { title, description, date } = req.body;
+    const reminders = await db('Reminders')
+      .where({ usuario_id })
+      .select('id', 'title', 'description', 'date');
 
-            await db('Reminders')
-                .where({ id })
-                .update({ title, description, date });
+    res.send(reminders);
+  } catch (error) {
+    console.error('Error al obtener los recordatorios:', error);
+    res.status(500).send({ error: 'Error al obtener los recordatorios.' });
+  }
+};
 
-            res.status(200).json({ message: 'Recordatorio actualizado con éxito' });
-        } catch (error) {
-            console.error('Error al actualizar el recordatorio:', error);
-            res.status(500).json({ error: 'Error al actualizar el recordatorio' });
-        }
+// Actualizar un recordatorio
+const updateReminder = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, date } = req.body;
+
+    if (!title || !description || !date) {
+      return res.status(400).send({ error: 'Todos los campos son requeridos.' });
     }
 
-    static async deleteReminder(req, res) {
-        try {
-            const { id } = req.params;
+    const formattedDate = new Date(date).toISOString().slice(0, 19).replace('T', ' ');
 
-            await db('Reminders')
-                .where({ id })
-                .del();
+    const result = await db('Reminders')
+      .where({ id })
+      .update({ title, description, date: formattedDate });
 
-            res.status(200).json({ message: 'Recordatorio eliminado con éxito' });
-        } catch (error) {
-            console.error('Error al eliminar el recordatorio:', error);
-            res.status(500).json({ error: 'Error al eliminar el recordatorio' });
-        }
+    if (result === 0) {
+      return res.status(404).send({ error: 'Recordatorio no encontrado.' });
     }
-}
 
-module.exports = RemindersController;
+    res.status(200).json({ message: 'Recordatorio actualizado correctamente.' });
+  } catch (error) {
+    console.error('Error al actualizar el recordatorio:', error);
+    res.status(500).send({ error: 'Error al actualizar el recordatorio.' });
+  }
+};
+
+// Eliminar un recordatorio
+const deleteReminder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await db('Reminders').where({ id }).del();
+
+    if (result === 0) {
+      return res.status(404).send({ error: 'Recordatorio no encontrado.' });
+    }
+
+    res.status(200).json({ message: 'Recordatorio eliminado correctamente.' });
+  } catch (error) {
+    console.error('Error al eliminar el recordatorio:', error);
+    res.status(500).send({ error: 'Error al eliminar el recordatorio.' });
+  }
+};
+
+module.exports = {
+  addReminder,
+  getReminders,
+  updateReminder,
+  deleteReminder,
+};
