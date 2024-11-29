@@ -8,13 +8,26 @@ const RemindersController = require('./controllers/RemindersController');
 
 const app = express();
 const puerto = 3050;
+const db = require('./dbconnection');
+
+
+// Ruta para probar la conexión a la base de datos
+app.get('/testConnection', async (req, res) => {
+  try {
+    const result = await db.raw('SELECT 1+1 AS result');
+    res.status(200).json({ success: true, result: result[0] });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 
 // app.use(cors());
 
 //Aqui debemos tener la dirección ip de nuestra computadora local
 app.use(cors({
-  origin: 'http://192.168.137.1', // IP de tu servidor local COLILAP
-  // origin: 'http://192.168.100.22', // IP de tu servidor local ASUS
+  origin: '*', // IP de tu servidor local COLILAP
+  // origin: 'http://192.168.137.1', // IP de tu servidor local ASUS
   credentials: true,
 }));
 

@@ -1,10 +1,9 @@
--- database.sql
--- Modificación de la base de datos
--- Modificación de la base de datos
+-- Eliminamos la base de datos si existe y la creamos nuevamente
 DROP DATABASE IF EXISTS moneywise;
 CREATE DATABASE moneywise;
 USE moneywise;
 
+-- Tabla: Usuario
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
@@ -14,50 +13,54 @@ CREATE TABLE Usuario (
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE IF EXISTS Categorias;
+-- Tabla: Categorias
 CREATE TABLE Categorias (
     id INT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     descripcion VARCHAR(255)
 );
 
+-- Tabla: Transacciones
 CREATE TABLE Transacciones (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT,
-  categoria_id INT,
-  monto DECIMAL(10, 2) NOT NULL,
-  tipo ENUM('Selecciona un tipo de gasto', 
-            'Vivienda_Alquiler/Hipoteca', 'Vivienda_Servicios básicos', 'Vivienda_Mantenimiento', 'Vivienda_Impuestos inmobiliarios', 'Vivienda_Seguros de hogar',
-            'Transporte_Combustible', 'Transporte_Transporte público', 'Transporte_Mantenimiento del vehículo', 'Transporte_Peajes', 'Transporte_Estacionamiento', 'Transporte_Seguro del vehículo',
-            'Alimentación_Supermercado', 'Alimentación_Restaurantes', 'Alimentación_Comida rápida', 'Alimentación_Bebidas', 'Alimentación_Snacks',
-            'Salud_Consultas médicas', 'Salud_Medicamentos', 'Salud_Seguro médico', 'Salud_Gimnasio', 'Salud_Productos de belleza', 'Salud_Cuidado personal',
-            'Educación_Colegiaturas', 'Educación_Libros y materiales', 'Educación_Cursos y talleres', 'Educación_Material escolar', 'Educación_Actividades extracurriculares',
-            'Entretenimiento_Cine', 'Entretenimiento_Teatro', 'Entretenimiento_Conciertos', 'Entretenimiento_Viajes', 'Entretenimiento_Suscripciones', 'Entretenimiento_Hobbies',
-            'Ropa y calzado_Vestimenta', 'Ropa y calzado_Calzado', 'Ropa y calzado_Accesorios',
-            'Regalos_Cumpleaños', 'Regalos_Navidad', 'Regalos_Otras ocasiones',
-            'Ahorro e inversión_Ahorro a corto plazo', 'Ahorro e inversión_Ahorro a largo plazo', 'Ahorro e inversión_Inversiones',
-            'Deudas_Tarjeta de crédito', 'Deudas_Préstamos personales', 'Deudas_Otros préstamos',
-            'Mascotas_Alimento', 'Mascotas_Veterinaria', 'Mascotas_Productos de higiene', 'Mascotas_Accesorios', 'Mascotas_Adiestramiento',
-            'Otros_Imprevistos', 'Otros_Donaciones', 'Otros_Impuestos (otros que no sean inmobiliarios)'
-           ) NOT NULL,
-  fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
-  FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    categoria_id INT,
+    monto DECIMAL(10, 2) NOT NULL,
+    tipo ENUM(
+        'Selecciona un tipo de gasto', 
+        'Vivienda_Alquiler/Hipoteca', 'Vivienda_Servicios básicos', 'Vivienda_Mantenimiento', 'Vivienda_Impuestos inmobiliarios', 'Vivienda_Seguros de hogar',
+        'Transporte_Combustible', 'Transporte_Transporte público', 'Transporte_Mantenimiento del vehículo', 'Transporte_Peajes', 'Transporte_Estacionamiento', 'Transporte_Seguro del vehículo',
+        'Alimentación_Supermercado', 'Alimentación_Restaurantes', 'Alimentación_Comida rápida', 'Alimentación_Bebidas', 'Alimentación_Snacks',
+        'Salud_Consultas médicas', 'Salud_Medicamentos', 'Salud_Seguro médico', 'Salud_Gimnasio', 'Salud_Productos de belleza', 'Salud_Cuidado personal',
+        'Educación_Colegiaturas', 'Educación_Libros y materiales', 'Educación_Cursos y talleres', 'Educación_Material escolar', 'Educación_Actividades extracurriculares',
+        'Entretenimiento_Cine', 'Entretenimiento_Teatro', 'Entretenimiento_Conciertos', 'Entretenimiento_Viajes', 'Entretenimiento_Suscripciones', 'Entretenimiento_Hobbies',
+        'Ropa y calzado_Vestimenta', 'Ropa y calzado_Calzado', 'Ropa y calzado_Accesorios',
+        'Regalos_Cumpleaños', 'Regalos_Navidad', 'Regalos_Otras ocasiones',
+        'Ahorro e inversión_Ahorro a corto plazo', 'Ahorro e inversión_Ahorro a largo plazo', 'Ahorro e inversión_Inversiones',
+        'Deudas_Tarjeta de crédito', 'Deudas_Préstamos personales', 'Deudas_Otros préstamos',
+        'Mascotas_Alimento', 'Mascotas_Veterinaria', 'Mascotas_Productos de higiene', 'Mascotas_Accesorios', 'Mascotas_Adiestramiento',
+        'Otros_Imprevistos', 'Otros_Donaciones', 'Otros_Impuestos (otros que no sean inmobiliarios)'
+    ) NOT NULL,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
+    FOREIGN KEY (categoria_id) REFERENCES Categorias(id)
 );
 
-
-CREATE TABLE IF NOT EXISTS MetaFinanciera (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT NOT NULL,
-  monto DECIMAL(10, 2) DEFAULT 0,  -- Meta financiera objetivo
-  ahorro_programado DECIMAL(10, 2) DEFAULT 0,  -- Ahorro programado por periodo
-  ahorro_actual DECIMAL(10, 2) DEFAULT 0,  -- Ahorro acumulado actual
-  periodo VARCHAR(50) DEFAULT 'Diario',  -- Periodo del ahorro (Diario, Semanal, etc.)
-  timePeriod INT DEFAULT 0,  -- Cantidad de días/semanas para cumplir la meta
-  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+-- Tabla: MetaFinanciera
+CREATE TABLE MetaFinanciera (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    monto DECIMAL(10, 2) DEFAULT 0,
+    ahorro_programado DECIMAL(10, 2) DEFAULT 0,
+    ahorro_actual DECIMAL(10, 2) DEFAULT 0,
+    periodo VARCHAR(50) DEFAULT 'Diario',
+    timePeriod DATE DEFAULT NULL,
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    fecha_limite DATE,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 
+-- Tabla: Reminders
 CREATE TABLE Reminders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
@@ -69,34 +72,23 @@ CREATE TABLE Reminders (
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 
--- Inserciones en la tabla Categorias
+-- Inserciones en Categorias
 INSERT INTO Categorias (id, nombre, descripcion) 
-VALUES (0, 'Selecciona una categoría', 'Auxiliar para selección de categoría'),
-       (1, 'Vivienda', 'Gastos relacionados con la vivienda'),
-       (2, 'Transporte', 'Gastos relacionados con el transporte'),
-       (3, 'Alimentación', 'Gastos relacionados con la alimentación'),
-       (4, 'Salud', 'Gastos relacionados con la salud'),
-       (5, 'Educación', 'Gastos relacionados con la educación'),
-       (6, 'Entretenimiento', 'Gastos relacionados con el entretenimiento'),
-       (7, 'Ropa y calzado', 'Gastos relacionados con la ropa y el calzado'),
-       (8, 'Regalos', 'Gastos relacionados con regalos'),
-       (9, 'Ahorro e inversión', 'Gastos relacionados con el ahorro e inversión'),
-       (10, 'Deudas', 'Gastos relacionados con las deudas'),
-       (11, 'Mascotas', 'Gastos relacionados con las mascotas'),
-       (12, 'Otros', 'Otros gastos');
+VALUES 
+    (0, 'Selecciona una categoría', 'Auxiliar para selección de categoría'),
+    (1, 'Vivienda', 'Gastos relacionados con la vivienda'),
+    (2, 'Transporte', 'Gastos relacionados con el transporte'),
+    (3, 'Alimentación', 'Gastos relacionados con la alimentación'),
+    (4, 'Salud', 'Gastos relacionados con la salud'),
+    (5, 'Educación', 'Gastos relacionados con la educación'),
+    (6, 'Entretenimiento', 'Gastos relacionados con el entretenimiento'),
+    (7, 'Ropa y calzado', 'Gastos relacionados con la ropa y el calzado'),
+    (8, 'Regalos', 'Gastos relacionados con regalos'),
+    (9, 'Ahorro e inversión', 'Gastos relacionados con el ahorro e inversión'),
+    (10, 'Deudas', 'Gastos relacionados con las deudas'),
+    (11, 'Mascotas', 'Gastos relacionados con las mascotas'),
+    (12, 'Otros', 'Otros gastos');
 
+-- Inserciones en Usuario
 INSERT INTO Usuario (nombre, email, passw, salario)
 VALUES ('Mauricio Serrano', 'mau.com', '123', 40000.00);
-
-ALTER TABLE MetaFinanciera
-ADD COLUMN fecha_limite DATE;  -- Fecha límite para completar la meta de ahorro.
-ALTER TABLE MetaFinanciera MODIFY timePeriod DATE;
-
-
-SELECT id, timePeriod FROM MetaFinanciera WHERE timePeriod NOT REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
--- para eliminar datos invalidos
-DELETE FROM MetaFinanciera WHERE timePeriod NOT REGEXP '^[0-9]{4}-[0-9]{2}-[0-9]{2}$';
-
-ALTER TABLE MetaFinanciera MODIFY timePeriod DATE;
-
-SELECT * FROM MetaFinanciera
